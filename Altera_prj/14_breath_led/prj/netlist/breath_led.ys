@@ -1,0 +1,3 @@
+read_verilog -sv -formal -overwrite {workspace}/user/src/breath_led.v
+design -reset-vlog; proc;
+write_json {workspace}/prj/netlist/breath_led.json

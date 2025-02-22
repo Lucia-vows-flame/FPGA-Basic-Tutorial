@@ -9,8 +9,8 @@ $\rm{}Digital\,\,IDE$ 的标准项目结构如下：
 
 ![alt text](image.png)
 
-此外，$\rm{}Altera\_prj$ 中的 `.doc` 中存放的是项目的说明，包括模块框图、波形图等。
+此外，`Altera_prj` 的 `.doc` 中存放的是项目的说明，包括模块框图、波形图等。
 
-$\rm{}Altera\_prj$ 主要是复现下面这本书的工程：
+`Altera_prj` 主要是复现下面这本书的工程：
 
 ![alt text](image-1.png)

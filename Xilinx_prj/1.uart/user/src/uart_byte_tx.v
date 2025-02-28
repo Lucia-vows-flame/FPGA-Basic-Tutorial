@@ -42,7 +42,7 @@ always @(posedge i_sysclk or negedge i_rst_n)
                         end
                 else if(en_baud_counter == 1'b1)        //只有使能信号有效时才进行计数
                         begin
-                                if (r_baud_counter == BAUD_COUNTER_MAX)
+                                if (r_baud_counter == BAUD_COUNTER_MAX) //波特率计数器计数到最大值时，计数器清零
                                         r_baud_counter <= 0;
                                 else
                                         r_baud_counter <= r_baud_counter + 1;
@@ -63,7 +63,7 @@ always @(posedge i_sysclk or negedge i_rst_n)
                         end
                 else if (r_baud_counter == BAUD_COUNTER_MAX)        //波特率计数器计数到最大值时，状态计数器进行计数
                         begin
-                                if (r_state_counter == STATE_COUNTER_MAX)        //状态计数器最大值为 9
+                                if (r_state_counter == STATE_COUNTER_MAX)        //状态计数器最大值为 9，当状态计数器计数到最大值时，代表检测到停止位，需要将状态计数器清零
                                         r_state_counter <= 0;
                                 else
                                         r_state_counter <= r_state_counter + 1;
@@ -161,7 +161,7 @@ always @(posedge i_sysclk or negedge i_rst_n)
 //使用组合逻辑，不会延迟一个时钟周期
 assign w_uart_tx_done = (r_state_counter == STATE_COUNTER_MAX) && (r_baud_counter == BAUD_COUNTER_MAX);
 //使用时序逻辑，延迟一个时钟周期，o_uart_tx_done 信号仅仅只在与其他模块交互时使用，本模块内部的逻辑不使用 o_uart_tx_done 信号
-always @(posedge i_sysclk or negedge i_rst_n)
+always @(posedge i_sysclk)      //不需要复位
         o_uart_tx_done <= w_uart_tx_done;
 
 //波特率计数器的使能信号
